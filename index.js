@@ -16,11 +16,7 @@ The function should:
 */
 
 function createMenuItem(name, price, category){
-  let menuItem = new Object();
-  menuItem.name = name;
-  menuItem.price = price;
-  menuItem.category = category;
-  return menuItem;
+  return {name, price, category};
 }
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 1b: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -56,13 +52,11 @@ export const burger = {
   price: 18, 
   category: "Lunch", 
   discount: function(who){
-    let theDiscount = 0;
     if (who === 'teacher' || who === 'student'){
-      theDiscount = this.price - (this.price * 0.25);
+      return (this.price - (this.price * 0.25));
     } else{
-      theDiscount = this.price - (this.price * 0.10);
+      return (this.price - (this.price * 0.10));
     }
-    return theDiscount;
   }
 }
 
@@ -150,14 +144,22 @@ Use the getReviewsByRating function below to do the following:
   For example: getReviewByRating(reviews, 4) would return these reviews in the 4 range (4-4.9):
   [
     {name: "Miranda", rating: 4, feedback:"fun trivia and cool vibes"},
-    {name: "Wen", rating: 4.5, feedback:"I don't leave my house often, but when I do, it's for this place. Highly reccomend."},
+    {name: "Wen", rating: 4.5, feedback:"I don't leave my house often, but when I do, it's for this place. Highly recommended."},
     {name:"Lauren", rating: 4, feedback: "Absolutely love that they have karaoke Fridays! Food and drink selection is okay."}
   ]
 */
 
- function getReviewByRating(/* code here */) {
-    /* code here */
-  }
+function getReviewByRating(arr, rate){
+  const rightRate = [];
+   for (let i = 0; i < arr.length; i++){
+     let rateMin = rate;
+     let rateMax= rate + 0.9;
+     if((arr[i]["rating"] >= rateMin) && (arr[i]["rating"] <= rateMax)){
+       rightRate.push(arr[i]);
+     }
+   }
+  return rightRate;
+}
 
   
 /* 💪💪💪💪💪💪💪💪💪💪 STRETCH 2: 💪💪💪💪💪💪💪💪💪💪   
@@ -173,9 +175,15 @@ Use the getLongReviews function below to do the following:
   ]
 */
 
-function getLongReviews(/* code here */) {
-    /* code here */
-  }
+function getLongReviews(array) {
+  const longReview = [];
+  for (let i = 0; i < array.length; i++){
+     if (array[i].feedback.split(' ').length > 15){
+       longReview.push(array[i])
+     }
+   }
+  return longReview;
+}
   
 
 /* 💪💪💪💪💪💪💪💪💪💪 STRETCH 3: 💪💪💪💪💪💪💪💪💪💪 
@@ -195,11 +203,20 @@ Use the carMaker function below to do the following:
   It would return 110 because it was created with 10 as the odometer and we added 100 to it with the drive method 
 */
 
-
-function carMaker(/* code here */) {
-    /* code here */
-    
+function carMaker(odometer) {
+  return{
+    odometer,
+    drive: function(miles){
+      this.odometer = this.odometer + miles;
+      return this.odometer;
+    }
+  }
 }
+
+let car = carMaker(10);
+console.log(car.odometer);
+car.drive(100);
+console.log(car.odometer);
 
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
